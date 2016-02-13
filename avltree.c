@@ -1,5 +1,5 @@
 /*
-A program to implement AVL tree
+A program to implement AVL trees
 */
 #include <stdio.h>
 #include <stdlib.h>
@@ -33,15 +33,15 @@ void buildtreebyarray()
     int i;
 
     //sample inputs , change limit value in for loop accordingly
-    int a[] = {14,15,4,9,7,18,3,5,16,20,17};
-    /*int a[] = {1,2,3,4,5,6,7};*/
+    //int a[] = {14,15,4,9,7,18,3,5,16,20,17};
+    int a[] = {1,2,3,4,5,6,7};
     printf("The input is:\n");
-    for(i=0;i<11;i++)
+    for(i=0;i<7;i++)
     {
         printf("%d ",a[i]);
     }
     printf("\n");
-    for(i=0;i<11;i++)
+    for(i=0;i<7;i++)
     {
         struct node * new_node ;
         new_node = (struct node *)malloc(sizeof(struct node));
@@ -67,22 +67,16 @@ void insert(struct node * new_node,struct node *current)
     //checks if the current node is the leaf node.
     if(new_node->data > current->data && current->rchild!=NULL)
     {
-        //current->rheight++;
         insert(new_node , current->rchild );
         current->rheight = max(current->rchild->lheight,current->rchild->rheight);
         current->rheight++; //it worked , YAY!
-        /*if(current->lchild!=NULL && current->rchild!=NULL)
-            current->rheight--;*/
         return ;
     }
     else if(new_node->data < current->data && current->lchild!=NULL)
     {
-        //current->lheight++;
         insert(new_node , current->lchild );
         current->lheight = max(current->lchild->lheight,current->lchild->rheight);
         current->lheight++; //it worked , YAY!
-        /*if(current->lchild!=NULL && current->rchild!=NULL)
-            current->lheight--;*/
         return ;
     }
 
@@ -137,4 +131,45 @@ int max(int a,int b)
         return b;
 }
 
+void r2l_rotation(struct node * k1 , struct node * k2)
+{
+    if(k2->lchild==NULL)
+    {
+        simpleshifting(struct node * k2) ;
+        return;
+    }
+
+    //struct node * tempB ; //stores the address of subtree B (follow the standard diagram)
+    //struct node * tempk1 ; //stores the address of node k1
+    //tempk1 = k1 ;
+    //tempB = k2->lchild ;
+    k2->parent = k2->lchild ;
+    k2->lchild = k1->rchild ;
+}
+
+void simpleshifting(struct node *k)
+{
+    struct node * tempk2_rchild ;
+    tempk2_rchild = k->rchild ;
+    k->rchild->parent = k->parent ;
+    k->parent = tempk2_rchild ;
+
+}
+
+//XXX:Fix this
+/*void l2r_rotation(struct node * k1 , struct node * k2)
+{
+    if(k1->rchild==NULL)
+    {
+        simpleshifting(struct node * k2) ;
+        return;
+    }
+
+    //struct node * tempB ; //stores the address of subtree B (follow the standard diagram)
+    //struct node * tempk1 ; //stores the address of node k1
+    //tempk1 = k1 ;
+    //tempB = k2->lchild ;
+    k2->parent = k2->lchild ;
+    k2->lchild = k1->rchild ;
+}*/
 /*sample input 1,2,3,4,5,6,7 */
