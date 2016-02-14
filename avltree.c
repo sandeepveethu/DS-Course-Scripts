@@ -21,12 +21,14 @@ void buildtreebyarray();
 int max(int,int);
 void r2l_rotation(struct node *);
 void l2r_rotation(struct node *);
+void simpleshifting(struct node *);
 void make_it_avl(struct node *);
 //void simpleshifting(struct node *);
 
 void main()
 {
     buildtreebyarray();
+    printf("\nfinally tree is: \n");
     display(root);
     //printf("root %d it's lchild %d it's rchild %d",root->data,root->lchild->data,root->rchild->data);
     //printf("%d lchild is %d and rchild is %d",root->rchild->data,root->rchild->lchild->data,root->rchild->rchild->data);
@@ -80,7 +82,11 @@ void insert(struct node * new_node,struct node *current)
         current->rheight++;//it worked , YAY!
         if((current->rheight - current->lheight)>1)
         {
-            printf("\nit occured for %d and left height is %d and right height is %d\n",current->data,current->lheight,current->rheight);
+            printf("\nit occured for %d and left height is %d and right height is %d\n"
+            ,current->data,current->lheight,current->rheight);
+            printf("currently tree is :\n");
+            display(root);
+            printf("----------");
             make_it_avl(current); //keeping it clean here
         }
         return ;
@@ -134,9 +140,12 @@ void display(struct node * current)
     }
     else
     {
-        printf("\n***%d node lheight is %d and rheight is %d parent is ",current->data,current->lheight,current->rheight);
-        if(current->parent!=NULL)
-            printf("%d***\n",current->parent->data);
+        printf("\n***%d node lheight is %d and rheight is %d ",
+        current->data,current->lheight,current->rheight);
+        if(current->parent==NULL)
+            printf("and it's root***\n");
+        else
+            printf("parent is %d***\n",current->parent->data);
         display(current->lchild);
         display(current->rchild);
     }
@@ -205,12 +214,20 @@ void r2l_rotation(struct node * k2)
 
 void l2r_rotation(struct node * k1)
 {
-    return;
+    struct node * k2 = root ;
+
+    k2->lheight = k1->rheight ;
+    k2->lchild = k1->rchild ;
+    k2->parent = k1 ;
+    root = k1 ;
+
+    k1->rheight = max(k1->rheight,k2->rheight)+1 ;
+    k1->rchild = k2 ;
+    k1->parent = NULL;
 }
 
 void simpleshifting(struct node * k)
 {
-    printf("here\n");
     //giving different pointer to the address of rchild of k , as it will now
     //become parent of k.
     struct node *k2 = k->rchild ;
@@ -228,7 +245,7 @@ void simpleshifting(struct node * k)
     k2->parent = k3;
     k3->rchild = k2;
     k2->lchild = k ;
-    printf("k is %d k2 is %d",k->data,k2->data);
-    printf("k2 parent is %d rchild is %d",k2->parent->data,k2->rchild->data);
+    //printf("k is %d k2 is %d",k->data,k2->data);
+    //printf("k2 parent is %d rchild is %d",k2->parent->data,k2->rchild->data);
 
 }
