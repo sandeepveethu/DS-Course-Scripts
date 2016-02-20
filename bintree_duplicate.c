@@ -1,7 +1,7 @@
 /*
 This program initialises a tree data structre such that left child's data is smaller
 than parent's data and right child's data is larger  than parent's data.
-This program checks for data duplicacy and recard duplicate entries.
+This program checks for data duplicacy and ignores duplicate entries.
 */
 #include <stdio.h>
 #include <stdlib.h>
