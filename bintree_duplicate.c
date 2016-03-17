@@ -6,15 +6,16 @@ This program checks for data duplicacy and recard duplicate entries.
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-struct node
+typedef struct tree_node
 {
-    struct node * lchild ;
-    struct node * rchild ;
+    struct tree_node * lchild ;
+    struct tree_node * rchild ;
     int data ;
-}*root=NULL;
+}node;
 
-void insert(struct node * , struct node *);
-void display(struct node *);
+node *root=NULL;
+void insert( node * ,  node *);
+void display( node *);
 void buildtree1by1();
 void buildtreebyarray();
 void main()
@@ -31,8 +32,8 @@ void buildtree1by1()
     int i;
     do
     {
-        struct node * new_node ;
-        new_node = (struct node *)malloc(sizeof(struct node));
+         node * new_node ;
+        new_node = ( node *)malloc(sizeof( node));
         printf("Add the value : ");
         scanf("%d",&(new_node->data));
         if(root==NULL)
@@ -62,8 +63,8 @@ void buildtreebyarray()
     printf("\n");
     for(i=0;i<18;i++)
     {
-        struct node * new_node ;
-        new_node = (struct node *)malloc(sizeof(struct node));
+         node * new_node ;
+        new_node = ( node *)malloc(sizeof( node));
         new_node->data = a[i];
         if(root==NULL)
         {
@@ -78,7 +79,7 @@ void buildtreebyarray()
         }
     }
 }
-void insert(struct node * new_node,struct node *current)
+void insert( node * new_node, node *current)
 {
     //checks if the current node is the lead node.
     if(new_node->data > current->data && current->rchild!=NULL)
@@ -104,7 +105,7 @@ void insert(struct node * new_node,struct node *current)
     //or is it the right child.
     else if(new_node->data < current->data)
     {
-        printf("%d is the left child of%d\n",new_node->data,current->data);
+        printf("%d is the left child of %d\n",new_node->data,current->data);
         current->lchild = new_node ;
         return ;
     }
@@ -117,7 +118,8 @@ void insert(struct node * new_node,struct node *current)
 
 }
 
-void display(struct node * current)
+//a preorder traversal
+void display( node * current)
 {
     if(current==NULL)
     {
@@ -130,5 +132,6 @@ void display(struct node * current)
         display(current->rchild);
     }
 }
+
 
 /*sample  input 14 15 4 9 7 18 3 5 16 4 20 17 9 14 5 */
