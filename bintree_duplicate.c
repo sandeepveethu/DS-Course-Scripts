@@ -16,13 +16,15 @@ typedef struct tree_node
 node *root=NULL;
 void insert( node * ,  node *);
 void display( node *);
+void delete_tree(node *);
 void buildtree1by1();
 void buildtreebyarray();
 void main()
 {
     buildtreebyarray();
     //buildtree1by1();
-    display(root);
+    //display(root);
+    delete_tree(root);
     printf("\n");
     printf("\n");
 }
@@ -66,12 +68,14 @@ void buildtreebyarray()
          node * new_node ;
         new_node = ( node *)malloc(sizeof( node));
         new_node->data = a[i];
+        new_node->lchild = NULL ;
+        new_node->rchild = NULL ;
         if(root==NULL)
         {
             root = new_node ;
-            root->lchild = NULL;
-            root->rchild = NULL;
-            printf("%d is the root data\n",root->data);
+            //root->lchild = NULL;
+            //root->rchild = NULL;
+            //printf("%d is the root data\n",root->data);
         }
         else
         {
@@ -98,21 +102,26 @@ void insert( node * new_node, node *current)
     //checks if the new node should be the left child of the current node.
     if(new_node->data > current->data)
     {
-        printf("%d is right child of %d\n",new_node->data,current->data);
+        //printf("%d is right child of %d\n",new_node->data,current->data);
         current->rchild = new_node ;
         return;
     }
     //or is it the right child.
     else if(new_node->data < current->data)
     {
-        printf("%d is the left child of %d\n",new_node->data,current->data);
+        //printf("%d is the left child of %d\n",new_node->data,current->data);
         current->lchild = new_node ;
         return ;
     }
     //so, this is a duplicate entry!
     else
     {
-        printf("%d is duplicate entry\n",new_node->data);
+        //EDIT:earlier, there was a memory leak when duplicate entry
+        //was added, because memory was allocated first and check for duplicacy was
+        //done later, the following line of code ensures that this allocated
+        //memory is freed
+        free(new_node);
+        
         return ;
     }
 
@@ -134,4 +143,17 @@ void display( node * current)
 }
 
 
+void delete_tree(node * current)
+{
+    if(current==NULL)
+    {
+       return;
+    }
+    else
+    {
+        delete_tree(current->lchild);
+        delete_tree(current->rchild);
+        free(current);
+    }
+}
 /*sample  input 14 15 4 9 7 18 3 5 16 4 20 17 9 14 5 */
