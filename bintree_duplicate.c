@@ -23,7 +23,7 @@ void main()
 {
     buildtreebyarray();
     //buildtree1by1();
-    //display(root);
+    display(root);
     delete_tree(root);
     printf("\n");
     printf("\n");
@@ -73,9 +73,7 @@ void buildtreebyarray()
         if(root==NULL)
         {
             root = new_node ;
-            //root->lchild = NULL;
-            //root->rchild = NULL;
-            //printf("%d is the root data\n",root->data);
+            printf("%d is the root data\n",root->data);
         }
         else
         {
@@ -102,14 +100,14 @@ void insert( node * new_node, node *current)
     //checks if the new node should be the left child of the current node.
     if(new_node->data > current->data)
     {
-        //printf("%d is right child of %d\n",new_node->data,current->data);
+        printf("%d is right child of %d\n",new_node->data,current->data);
         current->rchild = new_node ;
         return;
     }
     //or is it the right child.
     else if(new_node->data < current->data)
     {
-        //printf("%d is the left child of %d\n",new_node->data,current->data);
+        printf("%d is the left child of %d\n",new_node->data,current->data);
         current->lchild = new_node ;
         return ;
     }
@@ -121,7 +119,7 @@ void insert( node * new_node, node *current)
         //done later, the following line of code ensures that this allocated
         //memory is freed
         free(new_node);
-        
+
         return ;
     }
 
