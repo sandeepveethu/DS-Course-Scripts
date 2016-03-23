@@ -17,6 +17,7 @@ struct node
 
 void insert(struct node * , struct node *);
 void display(struct node *);
+void delete_tree(struct node *);
 void buildtreebyarray();
 int max(int,int);
 void r2l_rotation(struct node *);
@@ -32,6 +33,7 @@ void main()
     display(root);
     //printf("root %d it's lchild %d it's rchild %d",root->data,root->lchild->data,root->rchild->data);
     //printf("%d lchild is %d and rchild is %d",root->rchild->data,root->rchild->lchild->data,root->rchild->rchild->data);
+    delete_tree(root);
     printf("\n");
     printf("\n");
 }
@@ -58,12 +60,12 @@ void buildtreebyarray()
         new_node->data = a[i];
         new_node->lheight = 0;
         new_node->rheight = 0;
+        new_node->parent = NULL ;
+        new_node->lchild = NULL ;
+        new_node->rchild = NULL ;
         if(root==NULL)
         {
             root = new_node ;
-            root->parent = NULL;
-            root->lchild = NULL;
-            root->rchild = NULL;
             //printf("%d is the root data\n",root->data);
         }
         else
@@ -127,6 +129,7 @@ void insert(struct node * new_node,struct node *current)
     else
     {
         //printf("%d is duplicate entry\n",new_node->data);
+        free(new_node);
         return ;
     }
 
@@ -248,4 +251,19 @@ void simpleshifting(struct node * k)
     //printf("k is %d k2 is %d",k->data,k2->data);
     //printf("k2 parent is %d rchild is %d",k2->parent->data,k2->rchild->data);
 
+}
+
+
+void delete_tree(struct node * current)
+{
+    if(current==NULL)
+    {
+       return;
+    }
+    else
+    {
+        delete_tree(current->lchild);
+        delete_tree(current->rchild);
+        free(current);
+    }
 }
