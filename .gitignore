@@ -1,3 +1,4 @@
 *.py~
 *.c~
-junk.c
+junk*
+a.out
