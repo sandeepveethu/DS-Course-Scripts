@@ -7,15 +7,15 @@ void printlis(int*,int);
 void main()
 {
 	int a[] = {3,4,-1,0,6,2,3};
-
+	//int a[] = {1,4,2,6};
 	//this array stores the longest subsequence length at each index of a[]
 	//initially each element is a LIS on its own, so length is 1 at each index
+	//int lis[] = {1,1,1,1,1,1,1};
 	int lis[] = {1,1,1,1,1,1,1};
-	
 	int i,j,n=7;
 	
 	//start updating length of LIS at each index
-	for(i=0;i<n;i++)
+	for(i=1;i<n;i++)
 	{
 		//move j from 0 to i-1 checking if a[j]<a[i]
 		//if yes, then the LIS at a[j] can be extended by a[i]

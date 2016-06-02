@@ -15,7 +15,7 @@ int rmq(int*,int,int,int,int,int,int);
 void main()
 {
 	int i,n = 6;
-	int a[] = {5,1,3,11,9,7};
+	int a[] = {-1,3,4,0,2,1};
 
 	//if n is a power of 2 then t is 2n-1
 	//otherwise, say if n is 5, then it is 2(2^3)-1 = 15
@@ -23,6 +23,10 @@ void main()
 	//i.e. here 8>5 and then apply 2n-1 on that
 	int t = (int)((2*pow(2,(int)ceil(log2(n))))-1) ;
 
+	//another way of determining tree size
+	//i=1;
+	//while((1<<i++)<n);
+	//t=(1<<(i+1))-1;
 
 	//leaf nodes start from t/2
 	int tree[t]; // t is no of elements in segment tree
@@ -41,7 +45,7 @@ void main()
 		}
 		printf("%d ",tree[i]);
 	}
-	printf("\n%d\n",rmq(tree,t,0,n-1,2,2,0));
+	printf("\n%d\n",rmq(tree,t,0,n-1,0,4,0));
 }
 
 void initialisetree(int* tree, int t)
